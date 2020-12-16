@@ -26,7 +26,7 @@ def entry(request, title):
     })
   else:
     return render(request, "encyclopedia/error.html", {
-      "errorMessage": "Requested page not found."
+      "errorMessage": f"{title} not found."
     })
 
 def search(request):
@@ -66,6 +66,7 @@ def new(request):
       #test to see if file name already exists:
       if not util.get_entry(title):
         util.save_entry(title, content)
+        return redirect("/" + title)
       else:
         return render(request, "encyclopedia/error.html", {
           "errorMessage": f"A page named {title} already exists."
