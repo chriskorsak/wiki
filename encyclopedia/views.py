@@ -37,6 +37,7 @@ def search(request):
       else:
         #empty list, will be populated if substring in entry
         partialResults = []
+        #get entries
         entries = util.list_entries()
         query = query.lower()
 
@@ -48,3 +49,8 @@ def search(request):
           "partialResults": partialResults
         })
       return render(request, "encyclopedia/error.html")
+  # else:
+  #   return render(request, "encyclopedia/error.html")
+
+def new(request):
+  return render(request, "encyclopedia/new.html")
