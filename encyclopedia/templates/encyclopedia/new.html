@@ -7,13 +7,13 @@
 {% block body %}
     <h1>Create New Page</h1>
 
-    <form action="{% url 'new' %}" method="POST">
+    <form action="{% url 'new' %}" method="POST" class="new-entry">
       {% csrf_token %}
       <div class="form-group">
-        <input type="text" placeholder="Title" name="title" class="form-control">
+        <input type="text" placeholder="Title" name="title" class="form-control" required>
       </div>
       <div class="form-group">
-        <textarea name="text" class="form-control"></textarea>
+        <textarea name="content" class="form-control" required></textarea>
       </div>
       <input type="submit">
     </form>

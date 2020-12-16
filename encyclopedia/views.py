@@ -5,9 +5,13 @@ from django import forms
 from . import util
 
 class searchForm(forms.Form):
-    # here you define all the form inputs you want the user to fill out:
-    # CharField is a text input with a label of 'query'
-    query = forms.CharField()
+  # here you define all the form inputs you want the user to fill out:
+  # CharField is a text input with a label of 'query'
+  query = forms.CharField()
+
+class entryForm(forms.Form):
+  title = forms.CharField()
+  content = forms.CharField()
 
 def index(request):
   return render(request, "encyclopedia/index.html", {
@@ -21,7 +25,9 @@ def entry(request, title):
       "pageTitle": title
     })
   else:
-    return render(request, "encyclopedia/error.html")
+    return render(request, "encyclopedia/error.html", {
+      "errorMessage": "Requested page not found."
+    })
 
 def search(request):
   if request.method == "POST":
@@ -48,9 +54,20 @@ def search(request):
         return render(request, "encyclopedia/search.html", {
           "partialResults": partialResults
         })
-      return render(request, "encyclopedia/error.html")
-  # else:
-  #   return render(request, "encyclopedia/error.html")
+      # return render(request, "encyclopedia/error.html")
 
 def new(request):
+  if request.method == "POST":
+    #get form inputs (title, content)
+    form = entryForm(request.POST)
+    if form.is_valid():
+      title = form.cleaned_data["title"]
+      content = form.cleaned_data["content"]
+      #test to see if file name already exists:
+      if not util.get_entry(title):
+        util.save_entry(title, content)
+      else:
+        return render(request, "encyclopedia/error.html", {
+          "errorMessage": f"A page named {title} already exists."
+        })   
   return render(request, "encyclopedia/new.html")
