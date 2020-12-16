@@ -72,3 +72,6 @@ def new(request):
           "errorMessage": f"A page named {title} already exists."
         })   
   return render(request, "encyclopedia/new.html")
+
+def edit(request):
+  return render(request, "encyclopedia/edit.html")
