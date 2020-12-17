@@ -7,7 +7,9 @@
 {% block body %}
     <h1>{{ pageTitle }}</h1>
     {{ entryText }}
-    <div class="edit-link">
-      <a href="{% url 'edit' %}">Edit entry</a>
-    </div>
+    <form action="{% url 'edit' %}" method="POST">
+      {% csrf_token %}
+      <input type="hidden" value="{{ pageTitle }}" name="pageTitle">
+      <input type="submit" value="Edit">
+    </form>
 {% endblock %}

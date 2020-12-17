@@ -13,6 +13,9 @@ class entryForm(forms.Form):
   title = forms.CharField()
   content = forms.CharField()
 
+class editForm(forms.Form):
+  pageTitle = forms.CharField()
+
 def index(request):
   return render(request, "encyclopedia/index.html", {
     "entries": util.list_entries()
@@ -74,4 +77,11 @@ def new(request):
   return render(request, "encyclopedia/new.html")
 
 def edit(request):
-  return render(request, "encyclopedia/edit.html")
+  if request.method == "POST":
+    form = editForm(request.POST)
+    if form.is_valid():
+      title = form.cleaned_data["pageTitle"]
+      return render(request, "encyclopedia/edit.html", {
+        "entryText": util.get_entry(title),
+        "pageTitle": title
+      })

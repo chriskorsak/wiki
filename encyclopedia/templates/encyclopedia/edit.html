@@ -10,12 +10,11 @@
     <form action="{% url 'edit' %}" method="POST" class="entry-form">
       {% csrf_token %}
       <div class="form-group">
-        <input type="text" name="title" class="form-control" value="title" required>
+        <input type="text" name="title" class="form-control" value="{{ pageTitle }}" required>
       </div>
       <div class="form-group">
-        <textarea name="content" class="form-control" required>Content</textarea>
+        <textarea name="content" class="form-control" required>{{ entryText }}</textarea>
       </div>
       <input type="submit" value="Submit">
     </form>
-
 {% endblock %}
