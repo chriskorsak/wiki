@@ -3,6 +3,7 @@ from django.http import HttpResponse
 
 from django import forms
 from . import util
+import random
 
 class searchForm(forms.Form):
   # here you define all the form inputs you want the user to fill out:
@@ -97,4 +98,14 @@ def update(request):
         content = form.cleaned_data["content"]
         util.save_entry(title, content)
         return redirect("/" + title)
+
+def randomPage(request):
+  #get number of entries for random number range
+  entries = util.list_entries()
+  entryCount = len(entries)
+  #create random index variable. minus 1 to not go outside of list range
+  randomIndex = random.randint(0, entryCount) - 1
+  #assign random index value to title variable
+  title = (entries[randomIndex])
+  return redirect("/" + title)
 
