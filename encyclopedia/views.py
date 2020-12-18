@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.urls import reverse
 
 from django import forms
 from . import util
@@ -9,8 +10,8 @@ import random
 
 class searchForm(forms.Form):
   # here you define all the form inputs you want the user to fill out:
-  # CharField is a text input with a label of 'query'
-  #the variable 'query' has to be the name of the input on the html form
+  # CharField is a text input with a name of 'query', for example
+  #the variable 'query' has to be the value of name attribute on the input element in the html form
   query = forms.CharField()
 
 class newEntryForm(forms.Form):
@@ -52,7 +53,7 @@ def search(request):
       #check to see if search query is an esisting entry
       if util.get_entry(query):
         #redirect to entry url if so
-        return redirect("/" + query)
+        return redirect(f"wiki/{query}")
       #return list of pages if substring is in entry, or error page
       else:
         #empty list, will be populated if substring in entry
@@ -80,7 +81,7 @@ def new(request):
       #test to see if file name already exists:
       if not util.get_entry(title):
         util.save_entry(title, content)
-        return redirect("/" + title)
+        return redirect(f"wiki/{title}")
       else:
         return render(request, "encyclopedia/error.html", {
           "errorMessage": f"A page named {title} already exists."
@@ -106,7 +107,7 @@ def update(request):
         title = form.cleaned_data["title"]
         content = form.cleaned_data["content"]
         util.save_entry(title, content)
-        return redirect("/" + title)
+        return redirect(f"wiki/{title}")
 
 def randomPage(request):
   #get number of entries for random number range
@@ -116,5 +117,5 @@ def randomPage(request):
   randomIndex = random.randint(0, entryCount) - 1
   #assign random index value to title variable
   title = (entries[randomIndex])
-  return redirect("/" + title)
+  return redirect(f"wiki/{title}")
 
