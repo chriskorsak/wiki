@@ -86,3 +86,15 @@ def edit(request):
         "entryText": util.get_entry(title),
         "pageTitle": title
       })
+
+def update(request):
+    if request.method == "POST":
+      #get form inputs (title, content)
+      #using same class for updating as when first creating entry 'newEntryForm'
+      form = newEntryForm(request.POST)
+      if form.is_valid():
+        title = form.cleaned_data["title"]
+        content = form.cleaned_data["content"]
+        util.save_entry(title, content)
+        return redirect("/" + title)
+
