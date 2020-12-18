@@ -7,13 +7,14 @@ from . import util
 class searchForm(forms.Form):
   # here you define all the form inputs you want the user to fill out:
   # CharField is a text input with a label of 'query'
+  #the variable 'query' has to be the name of the input on the html form
   query = forms.CharField()
 
-class entryForm(forms.Form):
+class newEntryForm(forms.Form):
   title = forms.CharField()
   content = forms.CharField()
 
-class editForm(forms.Form):
+class editEntryForm(forms.Form):
   pageTitle = forms.CharField()
 
 def index(request):
@@ -62,7 +63,7 @@ def search(request):
 def new(request):
   if request.method == "POST":
     #get form inputs (title, content)
-    form = entryForm(request.POST)
+    form = newEntryForm(request.POST)
     if form.is_valid():
       title = form.cleaned_data["title"]
       content = form.cleaned_data["content"]
@@ -78,7 +79,7 @@ def new(request):
 
 def edit(request):
   if request.method == "POST":
-    form = editForm(request.POST)
+    form = editEntryForm(request.POST)
     if form.is_valid():
       title = form.cleaned_data["pageTitle"]
       return render(request, "encyclopedia/edit.html", {
