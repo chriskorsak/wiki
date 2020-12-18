@@ -9,7 +9,7 @@
 
     <ul>
         {% for partial in partialResults %}
-            <li><a href="{{ partial }}">{{ partial }}</a></li>
+            <li><a href="{% url 'entry' partial %}">{{ partial }}</a></li>
         {% endfor %}
     </ul>
 
