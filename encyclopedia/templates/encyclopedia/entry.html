@@ -6,7 +6,8 @@
 
 {% block body %}
     <h1>{{ pageTitle }}</h1>
-    {{ entryText }}
+    <!-- | safe allows for HTML string to be outputted from markdown package -->
+    {{ entryText | safe }}
     <form action="{% url 'edit' %}" method="POST">
       {% csrf_token %}
       <input type="hidden" value="{{ pageTitle }}" name="pageTitle">

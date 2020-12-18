@@ -3,7 +3,9 @@ from django.http import HttpResponse
 
 from django import forms
 from . import util
+from markdown2 import Markdown
 import random
+
 
 class searchForm(forms.Form):
   # here you define all the form inputs you want the user to fill out:
@@ -25,8 +27,15 @@ def index(request):
 
 def entry(request, title):
   if util.get_entry(title):
+
+    ### use imported markdown package to convert markdown to html
+    markdowner = Markdown()
+    entryText = util.get_entry(title)
+    entryText = markdowner.convert(entryText)
+    ### end markdown pacakage conversion code
+
     return render(request, "encyclopedia/entry.html", {
-      "entryText": util.get_entry(title),
+      "entryText": entryText,
       "pageTitle": title
     })
   else:
