@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
 from django import forms
@@ -49,11 +49,12 @@ def search(request):
     #assign searchForm class to form variable
     form = searchForm(request.POST)
     if form.is_valid():
+      #query is the value of the name attribute on the input of form
       query = form.cleaned_data["query"]
-      #check to see if search query is an esisting entry
+      #check to see if search query is an existing entry
       if util.get_entry(query):
         #redirect to entry url if so
-        return redirect(f"wiki/{query}")
+        return HttpResponseRedirect(reverse("entry", args=(query,)))
       #return list of pages if substring is in entry, or error page
       else:
         #empty list, will be populated if substring in entry
@@ -69,7 +70,6 @@ def search(request):
         return render(request, "encyclopedia/search.html", {
           "partialResults": partialResults
         })
-      # return render(request, "encyclopedia/error.html")
 
 def new(request):
   if request.method == "POST":
@@ -81,7 +81,7 @@ def new(request):
       #test to see if file name already exists:
       if not util.get_entry(title):
         util.save_entry(title, content)
-        return redirect(f"wiki/{title}")
+        return HttpResponseRedirect(reverse("entry", args=(title,)))
       else:
         return render(request, "encyclopedia/error.html", {
           "errorMessage": f"A page named {title} already exists."
@@ -107,7 +107,7 @@ def update(request):
         title = form.cleaned_data["title"]
         content = form.cleaned_data["content"]
         util.save_entry(title, content)
-        return redirect(f"wiki/{title}")
+        return HttpResponseRedirect(reverse("entry", args=(title,)))
 
 def randomPage(request):
   #get number of entries for random number range
@@ -117,5 +117,5 @@ def randomPage(request):
   randomIndex = random.randint(0, entryCount) - 1
   #assign random index value to title variable
   title = (entries[randomIndex])
-  return redirect(f"wiki/{title}")
+  return HttpResponseRedirect(reverse("entry", args=(title,)))
 
