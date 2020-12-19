@@ -11,6 +11,8 @@
       <!-- url path is created by using url pattern name 'entry', followed by the variable entry to be used in path. this way, if i change the path on urls.py, i don't need to change this below.  -->
         {% for entry in entries %}
             <li><a href="{% url 'entry' entry %}">{{ entry }}</a></li>
+        {% empty %}
+            <li>No entries</li>
         {% endfor %}
     </ul>
 

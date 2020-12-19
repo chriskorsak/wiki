@@ -10,6 +10,8 @@
     <ul>
         {% for partial in partialResults %}
             <li><a href="{% url 'entry' partial %}">{{ partial }}</a></li>
+        {% empty %}
+          <li>None</li>
         {% endfor %}
     </ul>
 
