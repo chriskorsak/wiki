@@ -1,3 +1,6 @@
+/* google font import */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
 .sidebar {
   background-color: #f0f0f0;
   border-right: 1px solid #17a2b8;
@@ -7,13 +10,32 @@
 
 .main {
   padding: 20px;
-  padding-top: 30px;
+  padding-top: 35px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Roboto', sans-serif;
 }
 
 h1 {
     margin-top: 0px;
     padding-top: 15px;
 }
+
+/* Wiki title on sidebar */
+.title::first-letter {
+  font-size: 1.5em;
+}
+
+.title {
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+/* end title styles */
+
 
 textarea {
     min-height: 150px;
