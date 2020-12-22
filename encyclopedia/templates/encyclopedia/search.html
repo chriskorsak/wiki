@@ -7,7 +7,7 @@
 {% block body %}
     <h1>Search Results</h1>
 
-    <ul>
+    <ul class="entries">
         {% for partial in partialResults %}
             <li><a href="{% url 'entry' partial %}">{{ partial }}</a></li>
         {% empty %}

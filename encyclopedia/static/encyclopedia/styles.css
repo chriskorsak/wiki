@@ -1,5 +1,13 @@
-code {
-    white-space: pre;
+.sidebar {
+  background-color: #f0f0f0;
+  border-right: 1px solid #17a2b8;
+  height: 100vh;
+  padding: 20px;
+}
+
+.main {
+  padding: 20px;
+  padding-top: 30px;
 }
 
 h1 {
@@ -11,9 +19,8 @@ textarea {
     min-height: 150px;
 }
 
-.main {
-    padding: 20px;
-    padding-top: 30px;
+ul.entries {
+  list-style-type: none;
 }
 
 .search {
@@ -22,14 +29,24 @@ textarea {
     line-height: 15px;
 }
 
-.sidebar {
-    background-color: #f0f0f0;
-    height: 100vh;
-    padding: 20px;
+code {
+  white-space: pre;
 }
 
-@media screen and (max-width: 768px) {
+a {
+  color: #17a2b8;
+}
+
+a:hover {
+  color: #128091;
+}
+
+/* make sidebar 100% instead of full screen height for mobile */
+@media screen and (max-width: 767px) {
   .sidebar {
     height: 100%;
+    border-right: none;
+    border-bottom: 1px solid #17a2b8;
+
   }
 }
